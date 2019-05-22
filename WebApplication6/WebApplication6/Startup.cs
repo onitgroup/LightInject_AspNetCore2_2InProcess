@@ -24,7 +24,7 @@ namespace WebApplication6
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -37,9 +37,13 @@ namespace WebApplication6
             services.AddMvc()
                 //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 ;
+        }
 
-            var container = new ServiceContainer();
-            return container.CreateServiceProvider(services);
+        public void ConfigureContainer(IServiceContainer serviceContainer)
+        {
+            // Do LightInject specific registrations such as decorators here.
+            // Note that even if you don't have any registration in here,
+            // the method still have to exists in order for AspNetCore to use LightInject.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
